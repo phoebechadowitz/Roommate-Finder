@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+new_york:
+  name: New York
+  state: New York
+  country: USA
+
+westfield:
+  name: Westfield
+  state: New Jersey
+  country: USA

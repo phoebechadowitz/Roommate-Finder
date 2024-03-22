@@ -1,0 +1,18 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+third_ave:
+  street_address: 1564 3rd Avenue E
+  bedrooms: 3
+  rent: 3000
+  notes: Crazy nice kitcheb
+  neighborhood: bronx
+  city: new_york
+
+sunset_ave:
+  street_address: 200 Sunset Avenue
+  bedrooms: 5
+  rent: 5000
+  notes: Family home
+  neighborhood: north_side
+  city: westfield
+ 

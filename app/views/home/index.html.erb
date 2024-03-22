@@ -1,0 +1,31 @@
+<div>
+  <%if @my_apartment == nil%>
+     <h1 class="font-bold text-4xl">Home#index</h1>
+  <% else %>
+    <p>Current Residence:</p>
+    <h2> 
+      <%= link_to @my_apartment.street_address, apartment_path(@my_apartment) %>
+    </h2>
+  
+    <h2>Requests to Review</h2>
+    <ul>
+     <% @reviewable_requests.each do |request| %>
+        <li> 
+          <%= roommate_display(request.applicant.profile) %>
+          <%= button_to("Approve", apartment_apartment_request_path(@my_apartment, request), method: :patch, params: { status: :approved }, class: "button-small bg-green-600 mt-3") %>
+          <%= button_to("Deny", apartment_apartment_request_path(@my_apartment, request), method: :patch, params: { status: :denied }, class: "button-small bg-red-600 mt-3") %>
+        </li>
+      <% end %>
+    </ul>
+  <%end%>
+  <% if @my_requests != nil%>
+    <h2>My Requests</h2>
+    <ul>
+     <% @my_requests.each do |request| %>
+        <li> 
+         <%= request.apartment.street_address %>: <%= request.status%> 
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

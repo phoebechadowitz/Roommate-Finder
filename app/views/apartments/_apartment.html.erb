@@ -1,0 +1,71 @@
+<div id="<%= dom_id apartment %>">
+  <h2>
+  <%= link_to apartment.city.name, city_path(apartment.city) %>
+  </h2>
+  <h3>
+    <%= apartment.neighborhood.name %>
+  </h3>
+  <h1>
+    <%= apartment.street_address %>
+  </h1>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1 inline-block">Bedrooms:</strong> <%= apartment.bedrooms %> 
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1 inline-block">Rent:</strong>
+    <%= apartment.rent %>
+  </p>
+
+  <p class="my-5">
+    <%= apartment.notes %>
+  </p>
+
+  <div class="bg-gray-300 p-4">
+    
+    <h3>
+      <%= apartment.residents.count %> Residents
+    </h3>
+
+    <ul>
+      <% apartment.residents.each do |resident| %>
+        <li> 
+          <%= roommate_display(resident.profile) %>
+        </li>
+      <% end %>
+    </ul>
+
+
+    <% if apartment.current_resident?(current_user) %>
+      <%= button_to("Move Out", vacate_apartment_path(apartment), method: :patch, class: "button-small bg-red-600") %>
+    <% elsif apartment.unoccupied? %>
+      <%= button_to("Move In", occupy_apartment_path(apartment), method: :patch, class: "button-small bg-green-600") %>
+    <% else %>
+      <h3>
+        <%= apartment.apartment_requests.pending.count %> Applicants
+      </h3>
+
+      <ul>
+        <% apartment.applicants.each do |applicant| %>
+          <% if apartment.request_pending?(applicant) %>
+            <li> 
+              <%= roommate_display(applicant.profile) %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+      <%if apartment.requested?(current_user)%>
+        <%= button_to("Unapply", apartment_apartment_request_path(apartment, apartment.request(current_user)), method: :delete, class: "button-small bg-red-600") %>
+      <%else%>
+        <%= button_to("Apply", apartment_apartment_requests_path(apartment), method: :post, class: "button-small bg-green-600") %>
+      <%end%>
+    <% end %>
+  </div>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show this apartment", apartment, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Edit this apartment", edit_apartment_path(apartment), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+  <% end %>
+</div>

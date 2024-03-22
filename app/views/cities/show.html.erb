@@ -1,0 +1,48 @@
+<div class="mx-auto md:w-2/3 w-full flex">
+  <div class="mx-auto">
+    <%= render @city %>
+    <hr></hr>
+    <div> 
+      <%= link_to "Add new neighborhood", new_city_neighborhood_path(@city), class: "text-white block font-medium button-small float-right" %>
+    </div>
+    <h3>
+      Neighborhoods
+    </h3>
+    <ul>
+    <% @city.neighborhoods.each do |neighborhood| %>
+      <li>
+        <%= link_to neighborhood.name, city_neighborhood_path(@city, neighborhood) %>
+      </li>
+      <% end %>
+    </ul>
+
+    <table>
+    <thead>
+      <tr>
+        <th>Neighborhood</th>
+        <th>Address</th>
+        <th>Bedrooms</th>
+        <th>Rent</th>
+        <th>Remaining Bedrooms</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @city.apartments.each do |apartment| %>
+          <tr>
+            <td><%= apartment.neighborhood.name %></td>
+            <td><%= link_to(apartment.street_address, apartment_path(apartment.id)) %></td>
+            <td><%= apartment.bedrooms %></td>
+            <td><%= number_to_currency(apartment.rent, precision: 0) %></td>
+            <td><%= apartment.remaining_bedrooms %></td>
+          </tr>
+        <% end %>
+    </tbody>
+  </table>
+
+    <%= link_to "Edit this city", edit_city_path(@city), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <div class="inline-block ml-2">
+      <%= button_to "Destroy this city", city_path(@city), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+    </div>
+    <%= link_to "Back to cities", cities_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  </div>
+</div>
