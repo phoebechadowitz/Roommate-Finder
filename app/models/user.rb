@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   after_create :create_profile
 
-  validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/ }
+  validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\.[^@\s]+\z/ }
 
   def email=(value)
     super(value.downcase)

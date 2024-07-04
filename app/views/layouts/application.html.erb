@@ -30,7 +30,7 @@
       </div>
     </nav>
     <div class="w-full mx-20 my-3">
-      <% if notice.present? %>
+      <% if (notice.present?) || (alert.present?) %>
         <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
       <% end %>
     </div>
