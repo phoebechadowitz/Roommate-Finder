@@ -26,6 +26,8 @@ class ApartmentsController < ApplicationController
 
     respond_to do |format|
       if @apartment.save
+        current_user.apartment_id = @apartment.id
+        current_user.save
         format.html { redirect_to apartment_url(@apartment), notice: "Apartment was successfully created." }
         format.json { render :show, status: :created, location: @apartment }
       else
@@ -72,9 +74,13 @@ class ApartmentsController < ApplicationController
 
   def vacate
     current_user.apartment_id = nil
+    
     respond_to do |format|
       if current_user.save
-        format.html { redirect_to apartment_url(@apartment), notice: "You have moved out!" }
+        if @apartment.residents.count == 0
+          @apartment.destroy
+        end
+        format.html { redirect_to apartments_url, notice: "You have moved out!" }
       else
         format.html { render :show, status: :unprocessable_entity }
       end

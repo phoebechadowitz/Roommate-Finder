@@ -1,7 +1,6 @@
 class RegisterController < PublicController
     def new
         @user = User.new
-        puts "hey girl"
     end
 
     def create

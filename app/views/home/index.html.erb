@@ -12,6 +12,8 @@
      <% @reviewable_requests.each do |request| %>
         <li> 
           <%= roommate_display(request.applicant.profile) %>
+          Message:
+          <%= request.message %>
           <%= button_to("Approve", apartment_apartment_request_path(@my_apartment, request), method: :patch, params: { status: :approved }, class: "button-small bg-green-600 mt-3") %>
           <%= button_to("Deny", apartment_apartment_request_path(@my_apartment, request), method: :patch, params: { status: :denied }, class: "button-small bg-red-600 mt-3") %>
         </li>

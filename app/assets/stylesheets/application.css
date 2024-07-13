@@ -13,3 +13,21 @@
  *= require_tree .
  *= require_self
  */
+
+ .hidden {
+    display: none !important;
+ }
+ .message-popup {
+   position: fixed;
+   display: flex;
+   z-index: 9999;
+   justify-content: center;
+   text-align: center;
+   background-color: white;
+   width: 60%;
+   height: 60%;
+   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+ }
