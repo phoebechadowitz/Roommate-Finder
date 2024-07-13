@@ -1,23 +1,31 @@
 <div id="<%= dom_id apartment %>">
-  <div id="message-popup" class="hidden message-popup">
-    <h1 class="inline">
+  <div id="message-popup" class="hidden message-popup p-6 bg-white shadow-md rounded-md">
+    <h1 class="text-4xl font-semibold mb-4">
       Please enter a message to 
-      <% apartment.residents.each do |resident| %>
+      <% apartment.residents.each_with_index do |resident, index| %>
+        <% if apartment.residents.count == 1 || index < apartment.residents.count - 1 %>
           <%= resident.profile.name %>
+        <% else %>
+          and <%= resident.profile.name %>
+        <% end %>
       <% end %>
+
     </h1>
-    <% req = ApartmentRequest.new()%>
-    <%= form_with(model: req, class: "contents") do |form| %>
-      <div class="my-5">
-        <%= form.label :message %>
-        <%= form.text_field :message, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-      </div>
-       <%= form.hidden_field :apartment_id, value: apartment.id %>
-       <div class="inline">
-        <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium cursor-pointer" %>
-      </div>
-    <% end %>
-    <button class= "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium", id="back-button">Back</button>
+    <div class="w-full">
+      <% req = ApartmentRequest.new() %>
+      <%= form_with(model: req, class: "space-y-4 w-full") do |form| %>
+        <%= form.label :message, class: "hidden" %>
+        <%= form.text_area :message, class: "w-full h-40 shadow rounded-md border border-gray-300 outline-none px-3 py-2 mt-1 resize-none" %>
+        <%= form.hidden_field :apartment_id, value: apartment.id %>
+        <div class="flex justify-center space-x-4">
+          <%= form.submit "Send Message", class: "py-3 px-5 bg-blue-600 text-white font-medium rounded-lg cursor-pointer" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="flex justify-center space-x-4 w-full">
+      <button class="py-3 px-5 bg-gray-100 text-gray-800 font-medium rounded-lg cursor-pointer" id="back-button">Back</button>
+    </div>
   </div>
   <h2>
   <%= link_to apartment.city.name, city_path(apartment.city) %>
